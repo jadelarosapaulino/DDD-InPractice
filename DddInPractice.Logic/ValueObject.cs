@@ -24,7 +24,9 @@ namespace DddInPractice.Logic
 
         public override int GetHashCode()
         {
-            return GetHast
+            return GetHashCodeCore();
         }
+
+        protected abstract int GetHashCodeCore();
     }
 }
