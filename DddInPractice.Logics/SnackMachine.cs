@@ -7,14 +7,14 @@ namespace DddInPractice.Logics
 {
     using System.Linq;
 
-    public sealed class SnackMachine : Entity
+    public class SnackMachine : Entity
     {
-        public Money MoneyInsede { get; private set; } = None;
+        public Money MoneyInsede { get; protected set; } = None;
 
-        public Money MoneyInTransaction { get; private set; } = None;
+        public Money MoneyInTransaction { get; protected set; } = None;
 
 
-        public void InserMoney(Money money)
+        public virtual void InserMoney(Money money)
         {
             Money[] coinsAndNotes = { Cent, TenCent, Quarter, Dollar, FiveDollar, TwentyDollar };
 
@@ -24,12 +24,12 @@ namespace DddInPractice.Logics
             MoneyInTransaction += money;
         }
 
-        public void ReturnMoney()
+        public virtual void ReturnMoney()
         {
             MoneyInTransaction = None;
         }
 
-        public void BuySnack()
+        public virtual void BuySnack()
         {
             MoneyInsede += MoneyInTransaction;
 

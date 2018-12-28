@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NHibernate.Proxy;
 
 namespace DddInPractice.Logics
-{
+{            
     public abstract class Entity
     {
-        public long Id { get; private set; }
+        public long Id { get; protected set; }
+
+        public abstract Snack Snack { get; set; }
+
+        public abstract int Quantity { get; set; }
+
+        public abstract decimal Price { get; set; }
+
+        public abstract SnackMachine SnackMachine { get; set; }
+
+        public abstract int Position { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -50,7 +61,12 @@ namespace DddInPractice.Logics
 
         public override int GetHashCode()
         {
-            return (GetType().ToString() + Id).GetHashCode();
+            return (this.GetRealType().ToString() + Id).GetHashCode();
+        }
+
+        private Type GetRealType()
+        {
+            return NHibernateProxyHelper.GetClassWithoutInitializingProxy(this);
         }
     }
 }
